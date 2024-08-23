@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: some-application
+  namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: terezabisharyan/kubia
+spec:
+  project: default
+  sources:
+    repoURL: https://github.com/tereza-arta/for-test.git
+    targetRevision: HEAD
+    path: app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
